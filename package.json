@@ -1,0 +1,24 @@
+{
+  "name": "team-profile-generator",
+  "version": "1.0.0",
+  "description": "An application which allows the user to add indivisual profile information for team-members. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amnasyeda/team-profile-generator.git"
+  },
+  "keywords": [
+    "node.js",
+    "inquirer",
+    "jest"
+  ],
+  "author": "Amna Syeda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amnasyeda/team-profile-generator/issues"
+  },
+  "homepage": "https://github.com/amnasyeda/team-profile-generator#readme"
+}
