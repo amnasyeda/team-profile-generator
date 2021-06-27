@@ -102,19 +102,35 @@ const questions = [
     }
 ]
 
-const promptUser = () => {
+const promptStaff = () => {
 
     return inquirer.prompt(questions)
-    .then(userResponse => {
+    .then(staffResponse => {
 
-     
-        allEmployees.push(userResponse);
+        allEmployees.push(staffResponse);
 
-
-        if (userResponse.addEmployee) {
-            return promptUser();
+        if (staffResponse.addAdditional) {
+            return promptStaff();
         } else {
             return allEmployees;
         };
     });
 };
+
+const writeFile = fileContent => {
+    fs.writeFile('./dist/index.html', fileContent, err => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      else{
+        console.log( 'Your page has been created!');
+      }
+    });
+  };
+
+  console.log(`Welcome to the Team Profile Generator Page!`);
+
+promptStaff().then(data => generatePage(data))
+             .then(generatedHtml => writePage(generatedHtml))
+             .catch(err => console.log(err));
