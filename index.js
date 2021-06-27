@@ -7,7 +7,11 @@ const Intern = require("./lib/intern.js");
 const renderHTML = require("./lib/generatehtml.js");
 const RESULTS_DIR = path.resolve(__dirname, "results");
 const resultsPath = path.join(RESULTS_DIR, "team.html");
-const team = [];
+
+const Employee = require("./lib/employee.js");
+
+let team = [];
+let canAddManager = true;
 
 function startApp() {
     return inquirer.prompt(questions);
@@ -133,13 +137,21 @@ const questions = [
        ],
 
      // Add more staff
+     const questions = [
+        {
+            type: "list",
+            name: "memberType",
+            message: "Please choose the role for the employee",
+            choices: ["Manager", "Engineer", "Intern"],
+        }
+    ];
      const promptNewStaff = ()=>{
         console.log(`
       =================
       Add a New Employee
       =================
       `);
-        inquirer.prompt(selectStaffRole)
+        inquirer.prompt(questions)
                 .then(answer => {
             if (answer.staffRole === "Manager") {
             if (canAddManager) {
@@ -165,7 +177,6 @@ const questions = [
     console.log("There is a manager already!")
             promptNewStaff();
         }
-        
         
         } else if (answer.staffRole === "Engineer") {
             inquirer.prompt(questions.Engineer)
