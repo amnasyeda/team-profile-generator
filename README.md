@@ -22,7 +22,7 @@
   ## License
         
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
-[ISC License](https://www.isc.org/licenses/)
+[ISC](https://www.isc.org/licenses/)
    
   ## Contributing
 
