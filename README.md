@@ -1,7 +1,7 @@
   # Team-Profile-Generator
       
   ## Description
-      This application allows the user to create employee cards based on their requirements by using node.js. 
+ This application allows the user to create employee cards based on their requirements by using node.js. 
 
   ## Table of Contents
   * [Installation](#installation)
