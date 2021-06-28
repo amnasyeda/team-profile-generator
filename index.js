@@ -233,8 +233,6 @@ const writeFile = fileContent => {
       });
     };
 
-
-
 //const questions = 
 promptNewStaff().then(team =>{
     return generatePage(team);
