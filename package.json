@@ -27,6 +27,6 @@
     "isomorphic-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "jest": "^27.0.5"
+    "jest": "^27.0.6"
   }
 }

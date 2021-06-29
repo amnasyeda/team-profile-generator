@@ -1,9 +1,8 @@
-const inquirer = require('inquirer');
+const inquirer = require("inquirer");
 const fs = require("fs");
 const { log } = require("console");
 const path = require("path");
 
-const render = require("./lib/generatehtml.js");
 const RESULTS_DIR = path.resolve(__dirname, "results");
 const resultsPath = path.join(RESULTS_DIR, "members.html");
 
