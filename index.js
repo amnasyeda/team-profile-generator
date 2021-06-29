@@ -1,21 +1,17 @@
 const inquirer = require('inquirer');
 const fs = require("fs");
+
+const Employee = require("./lib/employee.js");
 const Manager = require("./lib/manager.js");
 const Engineer = require("./lib/engineer.js");
 const Intern = require("./lib/intern.js");
 
-const renderHTML = require("./lib/generatehtml.js");
+const render = require("./lib/generatehtml.js");
 const RESULTS_DIR = path.resolve(__dirname, "results");
 const resultsPath = path.join(RESULTS_DIR, "team.html");
 
-const Employee = require("./lib/employee.js");
-
 let team = [];
 let canAddManager = true;
-
-function startApp() {
-    return inquirer.prompt(questions);
-};
 
 const questions = [
     {
@@ -35,8 +31,8 @@ const questions = [
         type: "input",
         name: "idNumber",
         message: "What is the ID number of the employee? (Required)",
-        validate: IDNumber => {
-            if (IDNumber) {
+        validate: idNumber => {
+            if (idNumber) {
                 return true;
             } else {
                 console.log("Please enter the employee's ID number!");
@@ -137,7 +133,7 @@ const questions = [
        ],
 
      // Add more staff
-     const questions = [
+    const questions = [
         {
             type: "list",
             name: "memberType",
@@ -157,7 +153,7 @@ const questions = [
             if (canAddManager) {
             inquirer.prompt(questions.Manager)
             .then(answer => {
-        //save person's info
+        //Save person's info
         const manager = new Manager
            (
             answer.name,
@@ -181,7 +177,7 @@ const questions = [
         } else if (answer.staffRole === "Engineer") {
             inquirer.prompt(questions.Engineer)
                     .then(answer => {
-        //save info
+        //Save info
         const engineer = new Engineer
             (
             answer.name,
@@ -200,7 +196,7 @@ const questions = [
         } else if (answer.staffRole === "Intern") {
             inquirer.prompt(questions.Intern)
                     .then(answer => {
-        //save info
+        //Save info
         const intern = new Intern
             (
             answer.name,
@@ -218,7 +214,8 @@ const questions = [
              };
         });
      };
-    
+
+// Creating file 
 const writeFile = fileContent => {
       fs.writeFile('./results/team.html', fileContent, err => {
         if (err) {
@@ -233,7 +230,6 @@ const writeFile = fileContent => {
       });
     };
 
-//const questions = 
 promptNewStaff().then(team =>{
     return generatePage(team);
 }).then(pageHTML => {
