@@ -17,6 +17,12 @@
 
   ## Usage
    [Walkthrough Video]()
+   
+   ### HTML Page
+   <img width="1431" alt="html page" src="https://user-images.githubusercontent.com/81194686/123870233-0b6f4100-d900-11eb-9328-f0b669590cc8.png">
+
+   ### Terminal 
+  <img width="668" alt="terminal" src="https://user-images.githubusercontent.com/81194686/123870248-11fdb880-d900-11eb-85e4-3505541b0510.png">
 
   ## License
         
