@@ -1,227 +1,160 @@
+const { log } = require('console');
 const inquirer = require('inquirer');
 const fs = require('fs');
-const { log } = require("console");
-const path = require("path");
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer.js');
+const Intern = require('./lib/Intern');
 
-const RESULTS_DIR = path.resolve(__dirname, "results");
-const resultsPath = path.join(RESULTS_DIR, "members.html");
+const generatePage = require('./src/generatePage');
+const employeeArr = [];
 
-const Employee = require("./lib/employee.js");
-const Manager = require("./lib/manager.js");
-const Engineer = require("./lib/engineer.js");
-const Intern = require("./lib/intern.js");
-
-let members = [];
-let canAddManager = true;
-
-questions = [
+const questions = [
     {
-        type: "input",
-        name: "name",
-        message: "What is the name of the employee? (Required)",
-        validate: name => {
-            if (name) 
+        type: 'list',
+        name: 'role',
+        message: 'Please indicate the role of the employee below.',
+        choices: ['Manager','Engineer','Intern']
+      },
+    {
+        type: 'input',
+        name: 'name',
+        message: 'What is the name of the employee? (Required)',
+        validate: nameInput => {
+            if (nameInput) 
             {
             return true;
             } else {
-                console.log("Please enter the name of this employee!");
+                console.log('Please enter the name of this employee!');
                 return false;
                    }
         }
     },
     {
-        type: "input",
-        name: "idNumber",
-        message: "What is the ID number of the employee? (Required)",
-        validate: idNumber => {
-            if (idNumber)
+        type: 'input',
+        name: 'id',
+        message: 'What is the ID number of the employee? (Required)',
+        validate: idInput => {
+            if (idInput)
             {
             return true;
             } else {
-                console.log("Please enter the employee's ID number!");
+                console.log('Please enter the employees identification number!');
                 return false;
                    }
         }
     },
     {
-        type: "input",
-        name: "email",
-        message: "What is the employee's email address? (Required)",
-        validate: email => {
-            if (email) 
-            {
-            return true;
-            } else {
-                console.log("Please enter the employees's email address!");
-                return false;
-                   }
-        }
-    },
-    {
-        type: "list",
-        name: "role",
-        message: "What is the role of the employee? (Required)",
-        choices: ["Engineer", "Intern", "Manager"],
-        validate: staffRole => {
-            if (staffRole)
-            {
-            return true;
-            } else {
-                console.log("Please select the employee's role!");
-                return false;
-                   }
-        }
-    }
-    ],
-
-    // Manager question
-    managerQuestions = [
-        {
-            type: "input",
-            name: "officeNumber",
-            message: "What is the manager's office number? (Required)",
-            validate: officeNumber => {
-                if (officeNumber) 
-                {
+        type: 'input',
+        name: 'email',
+        message: 'What is the employees email? (Required)',
+        validate: emailInput => {
+            if (emailInput.includes('@') ){
                 return true;
-                } else {
-                  console.log("Please enter an office number!");
-                  return false;
-                       }
-              },
-                type: "list",
-                name: "addNew",
-                message: "Do you want to add another employee",
-                choices: ["yes", "no"]
-            }
-         ],
-
-    // Engineer Question
-    engineerQuestions = [
-        {
-            type: "input",
-            name: "github",
-            message: "What is the engineer's GitHub Username? (Required)",
-            validate: github => {
-                if (github) 
-                {
-                return true;
-                } else {
-                  console.log("Please enter a GitHub username!");
-                  return false;
-                       }
-            },
-              type: "list",
-              name: "addNew",
-              message: "Do you want to add another employee",
-              choices: ["yes", "no"]
+              } else {
+                console.log('Please enter the employees email address!');
+                return false;
+                   }
+        }
+    },
+    {
+        type: 'input',
+        name: 'officeNumber',
+        message: 'Please enter the office number of the manager.',
+        when:(officeNumberInput) => officeNumberInput.role ==='Manager', // this question pops up if the employee role is Manager
+        validate: officeNumberInput => {
+          if (officeNumberInput) {
+            return true;
+          } else {
+            console.log('Please enter the office number!');
+            return false;
           }
-       ],
-
-    // Intern Question
-    internQuestions = [
-        {
-            type: "input",
-            name: "school",
-            message: "What school did the intern attend? (Required)",
-            validate: school => {
-                if (school) 
-                {
-                return true;
-                } else {
-                  console.log("Please enter a valid school name!");
-                  return false;
-                       }
-            },
-              type: "list",
-              name: "addNew",
-              message: "Do you want to add another employee",
-              choices: ["yes", "no"]
+        }
+      },
+      {
+        type: 'input',
+        name: 'github',
+        message: 'Please enter the GitHub username for the employee.',
+        when:(githubInput) => githubInput.role ==='Engineer', 
+        validate: githubInput => {
+          if (githubInput) {
+            return true;
+          } else {
+            console.log('Please enter gitHub username!');
+            return false;
           }
-       ],
-
-     // Add more staff
-     chooseStaff = [
-        {
-            type: "list",
-            name: "memberType",
-            message: "Please choose the role for the employee",
-            choices: ["Manager", "Engineer", "Intern"],
         }
-    ];
-
-    function addNewStaff() {
-        inquirer.prompt(chooseStaff)
-            .then(answer => {
-            if (answer.staffRole === "Manager") {
-            if (canAddManager) {
-            inquirer.prompt(questions.Manager)
-            .then(answer => {
-        //Save person's info
-        const manager = new Manager
-           (
-            answer.name,
-            answer.idNumber,
-            answer.email,
-            answer.officeNumber
-           );
-        members.push(manager);
-        addManager = false;
-        if (answer.addNew === "yes") {
-            addNewStaff();
-        } else {
-            generate();
+      },
+      {
+        type: 'input',
+        name: 'school',
+        message: 'Please enter the name of the interns school.',
+        when:(schoolInput) => schoolInput.role ==='Intern', 
+        validate: schoolInput => {
+          if (schoolInput) {
+            return true;
+          } else {
+            console.log('Please enter the schools name!');
+            return false;
+          }
         }
-    });
-        } else {
-    console.log("There is a manager already!")
-            addNewStaff();
+      },
+      {
+        type: 'confirm',
+        name: 'confirmAddEmployee',
+        message: 'Would you like to enter another employee?',
+        default: false
+      }
+];
+
+   // Add new employee
+const promptEmployee = ()=>{
+    console.log(`
+  =======================
+    Add a New Employee
+  =======================
+  `);
+
+      return inquirer.prompt(questions)
+      .then(employeeData => {
+          let {role, name, id, email, github, school, officeNumber} = employeeData;
+          let employee; 
+        if (role === 'Manager'){ 
+           employee = new Manager(name, id, email, officeNumber);
         }
-        
-        } else if (answer.staffRole === "Engineer") {
-            inquirer.prompt(questions.Engineer)
-                    .then(answer => {
-        //Save info
-        const engineer = new Engineer
-            (
-            answer.name,
-            answer.idNumber,
-            answer.email,
-            answer.github
-            );
-        members.push(engineer);
-        if (answer.addNew === "yes") {
-            addNewStaff();
-        } else {
-            generate();
-        };
-    });
-        
-        } else if (answer.staffRole === "Intern") {
-            inquirer.prompt(questions.Intern)
-                    .then(answer => {
-        //Save info
-        const intern = new Intern
-            (
-            answer.name,
-            answer.idNumber,
-            answer.email,
-            answer.school
-            );
-        members.push(intern);
-        if (answer.addNew === "yes") {
-            addNewStaff();
-        } else {
-            generate();
-                     };
-                 });
-             };
-        });
-     };
+        if (role === 'Engineer'){ 
+            employee = new Engineer(name, id, email, github) 
+        }
+        if (role === 'Intern'){ 
+             employee = new Intern(name, id, email, school) 
+        }
+        employeeArr.push(employee); 
 
-addNewStaff();
+        if (employeeData.confirmAddEmployee) {
+          return promptEmployee(employeeArr);
+        } else {
+          return employeeArr; 
+        }
+      })
+    };
+const writeFile = fileContent => {
+      fs.writeFile('./dist/index.html', fileContent, err => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+  
+        else{
 
-function generate() {
-    fs.writeFileSync(resultsPath, render(members), "utf-8");
-    process.exit(0);
-}
+          console.log( 'File created!');
+        }
+      });
+    };
+
+promptEmployee().then(employeeArr =>{
+    return generatePage(employeeArr);
+}).then(pageHTML => {
+    return writeFile(pageHTML);
+  })
+  .catch(err => {
+    console.log(err);
+  });  

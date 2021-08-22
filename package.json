@@ -23,6 +23,7 @@
   "homepage": "https://github.com/amnasyeda/team-profile-generator#readme",
   "dependencies": {
     "es6-promise": "^4.2.8",
+    "express": "^4.17.1",
     "inquirer": "^8.1.1",
     "isomorphic-fetch": "^3.0.0"
   },
