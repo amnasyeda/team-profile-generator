@@ -1,3 +1,15 @@
+header{
+    background-color:rgb(156, 179, 201);
+    margin: 30px;
+
+}
+.dist {
+
+    margin: auto;
+    display: inline-block;
+    margin-left: 60px;
+}
+
 h1 {
     Font-Family: 'Palatino', Serif;
     font-size: 45px;
