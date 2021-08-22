@@ -16,13 +16,15 @@
      npm install, npm i inquirer, npm install --save-dev jest
 
   ## Usage
-   [Walkthrough Video]()
+   [Walkthrough Video](https://www.youtube.com/watch?v=PcC6VnwZo3Q)
    
    ### HTML Page
-   <img width="1431" alt="html page" src="https://user-images.githubusercontent.com/81194686/123870233-0b6f4100-d900-11eb-9328-f0b669590cc8.png">
+<img width="1071" alt="index" src="https://user-images.githubusercontent.com/81194686/130369323-181f1f52-3a64-445a-9705-4d378c43e0f8.png">
+
 
    ### Terminal 
-  <img width="668" alt="terminal" src="https://user-images.githubusercontent.com/81194686/123870248-11fdb880-d900-11eb-85e4-3505541b0510.png">
+<img width="688" alt="team-profile-generator" src="https://user-images.githubusercontent.com/81194686/130369328-61334738-4ebb-4a45-8107-f4e664738e88.png">
+
 
   ## License
         
